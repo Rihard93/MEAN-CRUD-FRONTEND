@@ -39,4 +39,34 @@ router.post('/', (req,res) => {
     });
 });
 
+//Update a la base de datos
+router.put('/:id',(req,res) =>{
+    if(!ObjectId.isValid(req.params.id))        
+        return res.status(400).send(`No information found with the provided id : ${req.params.id}`);
+
+    var win = {
+        year: req.body.year,
+        winner: req.body.winner,
+        runnerup: req.body.runnerup,
+        result: req.body.result,
+        mvp: req.body.result,
+    };
+    //Se hace activa la bandera de new para obtener la informacion actualizada
+    WS_Winner.findByIdAndUpdate(req.params.id, { $set: win}, { new: true }, (err,doc) =>{
+        if (!err) { res.send(doc); }
+        else { console.log("ERROR: Couldn't update data in the database :" + JSON.stringify(err,undefined,2)); }
+    });
+});
+
+//Eliminar registros de la base de datos
+router.delete('/:id',(req,res) =>{
+    if(!ObjectId.isValid(req.params.id))        
+        return res.status(400).send(`No information found with the provided id : ${req.params.id}`);
+    
+    WS_Winner.findByIdAndRemove(req.params.id, (err,doc) => {
+        if (!err) { res.send(doc); }
+        else { console.log("ERROR: Couldn't delete data from database :" + JSON.stringify(err,undefined,2)); }
+    });
+});
+
 module.exports = router;
