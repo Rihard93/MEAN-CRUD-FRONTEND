@@ -47,3 +47,6 @@ a.action-btn:hover{
     bottom: 10%;
     left:7%;
   }
+
+.material-icons.color_orange { color: rgb(223, 119, 0); }
+.material-icons.color_red { color: rgb(155, 9, 9); }

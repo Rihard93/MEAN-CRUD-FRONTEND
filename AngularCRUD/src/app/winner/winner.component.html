@@ -32,15 +32,47 @@
                                         </label>
                                 </div> 
                                 <div class="input-field col s7">
-                                    <input type="text" name="mvp" #mvp="ngModel" [(ngModel)]="winnerService.selectedWinner.result" placeholder="Most Valuable Player name" required>
+                                    <input type="text" name="mvp" #mvp="ngModel" [(ngModel)]="winnerService.selectedWinner.mvp" placeholder="Most Valuable Player name" required>
                                         <label>MVP :
-                                            <label class="red-text">*</label>
+                                            <label class="red-text">*</label>   
                                         </label>
-                                </div>                                                                                                                                  
+                                </div>                                                                                                                                 
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s7">
+                                    <button class="btn btn-custom right" type="button" (click)="resetForm(winnerForm)">Reset</button>
+                                    <button class="btn btn-custom right" type="submit" [disabled]="!winnerForm.valid">Submit</button>
+                                </div>
                             </div>                           
                         </form>
                     </div>
                     <div class="col s7">
+                        <table class="responsive-table highlight">
+                            <thead>
+                                <tr>
+                                    <th>Year</th>
+                                    <th>Winner</th>
+                                    <th>Runner-up</th>
+                                    <th>Result</th>
+                                    <th>MVP</th>
+                                </tr>
+                            </thead>
+                            <tr *ngFor="let win of winnerService.winners">
+                                <td>{{win.year}}</td>
+                                <td>{{win.winner}}</td>
+                                <td>{{win.runnerup}}</td>
+                                <td>{{win.result}}</td>
+                                <td>{{win.mvp}}</td>
+                                <td>
+                                    <a class="action-btn" (click)="onEdit(win)">
+                                        <i class="material-icons color_orange">edit</i>
+                                    </a>
+                                    <a class="action-btn" (click)="onDelete(win._id,winnerForm)">
+                                        <i class="material-icons color_red">delete</i>
+                                    </a>                                    
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>

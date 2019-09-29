@@ -49,7 +49,7 @@ router.put('/:id',(req,res) =>{
         winner: req.body.winner,
         runnerup: req.body.runnerup,
         result: req.body.result,
-        mvp: req.body.result,
+        mvp: req.body.mvp,
     };
     //Se hace activa la bandera de new para obtener la informacion actualizada
     WS_Winner.findByIdAndUpdate(req.params.id, { $set: win}, { new: true }, (err,doc) =>{
