@@ -38,20 +38,35 @@ export class WinnerComponent implements OnInit {
 
   //Metodo para ingresar los datos a la base de datos (CREATE OPTION)
   onSubmit(form : NgForm){
-    if (form.value._id == ""){
-      this.winnerService.postWinner(form.value).subscribe((res) => {
-        this.resetForm(form);
-        this.refreshWinnerList();
-        M.toast({html: 'Winner added!', classes: 'rounded'});
-      });
-   }
-   else{
-    this.winnerService.putWinner(form.value).subscribe((res) => {
-      this.resetForm(form);
-      this.refreshWinnerList();
-      M.toast({html: 'Winner updated!', classes: 'rounded'});
-    });     
-   }
+    var YYYY = new Date().getFullYear();
+    if (form.value.year <= YYYY)
+    {
+      let regexpScore = new RegExp('[4][-][0-3]');
+      if(regexpScore.test(form.value.result))
+      {
+          if (form.value._id == ""){
+            this.winnerService.postWinner(form.value).subscribe((res) => {
+              this.resetForm(form);
+              this.refreshWinnerList();
+              M.toast({html: 'Winner added!', classes: 'rounded'});
+            });
+        }
+        else{
+          this.winnerService.putWinner(form.value).subscribe((res) => {
+            this.resetForm(form);
+            this.refreshWinnerList();
+            M.toast({html: 'Winner updated!', classes: 'rounded'});
+          });     
+        }
+      }
+      else
+      {
+        M.toast({html: "Can't have more than 7 games!", classes: 'rounded'})
+      } 
+    }   
+    else{
+      M.toast({html: "Year can't be higher than actual!", classes: 'rounded'});
+    }
   }
 
   //Metodo para leer los registros de la base (READ OPTION)
